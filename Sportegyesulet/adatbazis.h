@@ -21,7 +21,7 @@ class Adatbazis {
 public:
     /// Konstruktor
     /// @param n - adatbázis mérete
-    Adatbazis(size_t M = 1): Meret(M), nCsapat(0){
+    Adatbazis(size_t meret = 1): Meret(meret), nCsapat(0){
         Csapatok = new Csapat*[Meret];
     }
 
@@ -37,10 +37,7 @@ public:
     /// @return - referencia saját magára, hogy fűzhető legyen
     Adatbazis& operator=(const Adatbazis& rhs);
 
-    /// Csapat keresése
-    /// @param cs - a keresendő csapat
-    /// @return bool, hogy a csapat benne van-e az adatbázisban
-    bool keres(std::string str);
+
 
     /// Csapat felvétele
     /// @param cs - fevenni kívánt csapat
@@ -70,9 +67,8 @@ public:
     size_t amount() const {return nCsapat;}
 
     /// Teljes létszám lekérdezése
-    /// @param db - objektum aminek a teljes létszámára vagyunk kiváncsiak
     /// @return int - Az adatbázisban szereplő összes csapat létszámának összege
-    int letszam(Adatbazis& db);
+    int letszam();
 
     /// A teljes adatbázis kiírása
     void listaz();
@@ -85,7 +81,7 @@ public:
 
     ~Adatbazis() {
         for(size_t i = 0; i < nCsapat; i++)  {
-            delete *(Csapatok +i);
+            delete *(Csapatok+i);
         }
         delete[] Csapatok;
     }
