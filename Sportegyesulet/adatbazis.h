@@ -29,7 +29,9 @@ public:
     /// @param db - objektum amiről a másolatot kell létrehozni
     Adatbazis(const Adatbazis& db):Meret(db.Meret), nCsapat(db.nCsapat){
         Csapatok = new Csapat*[Meret];
-        for(size_t i = 0; i < nCsapat; i++) {Csapatok[i] = db.Csapatok[i];}
+        for(size_t i = 0; i < nCsapat; i++) {
+            Csapatok[i] = db.Csapatok[i]->clone();
+        }
     }
 
     /// Értékadás
@@ -46,7 +48,7 @@ public:
 
     /// Csapatok törlése az adatbázisból
     /// @param cs - törlendő csapat
-    void torol(std::string str);
+    void torol(Csapat* cs);
 
     /// Index operator
     /// @param idx - az index értéke
@@ -80,8 +82,8 @@ public:
     void fba(const char* fname);
 
     ~Adatbazis() {
-        for(size_t i = 0; i < nCsapat; i++)  {
-            delete *(Csapatok+i);
+        for(size_t i = 0; i < nCsapat; i++) {
+            if(Csapatok[i] != NULL) {delete *(Csapatok+i);}
         }
         delete[] Csapatok;
     }

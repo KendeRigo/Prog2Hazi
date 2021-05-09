@@ -26,7 +26,7 @@ int main() {
     {
     Adatbazis temp(1);
     temp.fbol("Data.txt");
-    temp.torol("FTC");
+    //temp.torol("FTC");
     Adatbazis temp2;
     temp2 = temp;
     temp.listaz();

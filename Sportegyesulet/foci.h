@@ -58,6 +58,8 @@ public:
     /// Fájlba írás
     void fba(const char* fname);
 
+    Foci* clone() {return new Foci(*this);}
+
     ~Foci();
 };
 

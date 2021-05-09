@@ -31,8 +31,6 @@ public:
     /// @return - referencia saját magára, hogy fűzhető legyen
     Csapat& operator=(const Csapat& rhs);
 
-    virtual std::string getType() const {return "Csapat";}
-
 
     /// Sportolók számának lekérdezése
     /// @return - sportolók száma
@@ -55,6 +53,8 @@ public:
 
     /// Fájlba írás
     virtual void fba(const char* fname);
+
+    virtual Csapat* clone() {return new Csapat(*this);}
 
     virtual ~Csapat();
 

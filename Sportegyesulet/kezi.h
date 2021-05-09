@@ -47,6 +47,8 @@ public:
     /// Fájlba írás
     void fba(const char* fname);
 
+    Kezi* clone() {return new Kezi(*this);}
+
     ~Kezi();
 };
 

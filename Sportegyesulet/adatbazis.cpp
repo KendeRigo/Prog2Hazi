@@ -1,6 +1,6 @@
 /**
  *  \file adatbazis.cpp
- *  Adatbazis osztÃ¡ly tagfÃ¼ggvÃ©nyeinek megvalÃ³sÃ­tÃ¡sa
+ *  Adatbazis osztály tagfüggvényeinek megvalósítása
  */
 
 #include "adatbazis.h"
@@ -10,11 +10,10 @@ Adatbazis& Adatbazis::operator=(const Adatbazis& rhs) {
     if(this != &rhs) {
         delete[] Csapatok;
         Meret = rhs.Meret;
-        nCsapat = 0;
+        nCsapat = rhs.nCsapat;
         Csapatok = new Csapat*[Meret];
         for(size_t i = 0; i < rhs.nCsapat; i++) {
-            Csapatok[i] = rhs.Csapatok[i];
-            nCsapat++;
+            Csapatok[i] = rhs.Csapatok[i]->clone();
         }
     }
     return *this;
@@ -41,7 +40,10 @@ void Adatbazis::felvesz(Csapat* cs) {
 
 
 
-void Adatbazis::torol(std::string str) {
+void Adatbazis::torol(Csapat* cs) {
+    for(size_t i = 0; i < nCsapat; i++) {
+        if(Csapatok[i] == cs) {delete *(Csapatok+i);}
+    }
 }
 
 int Adatbazis::letszam() {

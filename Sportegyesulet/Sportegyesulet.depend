@@ -12,24 +12,24 @@
 
 1618761457 c:\kende\bme\prog\nhf\sportegyesulet\string.h
 
-1620580131 c:\kende\bme\prog\nhf\sportegyesulet\csapat.h
+1620593515 c:\kende\bme\prog\nhf\sportegyesulet\csapat.h
 	<fstream>
 	<cstring>
 	"memtrace.h"
 
-1620580116 c:\kende\bme\prog\nhf\sportegyesulet\foci.h
+1620593519 c:\kende\bme\prog\nhf\sportegyesulet\foci.h
 	"csapat.h"
 	"memtrace.h"
 
-1620580162 c:\kende\bme\prog\nhf\sportegyesulet\kosar.h
+1620593558 c:\kende\bme\prog\nhf\sportegyesulet\kosar.h
 	"csapat.h"
 	"memtrace.h"
 
-1620580146 c:\kende\bme\prog\nhf\sportegyesulet\kezi.h
+1620593547 c:\kende\bme\prog\nhf\sportegyesulet\kezi.h
 	"csapat.h"
 	"memtrace.h"
 
-1620579977 c:\kende\bme\prog\nhf\sportegyesulet\adatbazis.h
+1620593609 c:\kende\bme\prog\nhf\sportegyesulet\adatbazis.h
 	"csapat.h"
 	"foci.h"
 	"kezi.h"
@@ -40,7 +40,7 @@
 	<iostream>
 	"memtrace.h"
 
-1620578749 source:c:\kende\bme\prog\nhf\sportegyesulet\sportegyesulet_main.cpp
+1620592432 source:c:\kende\bme\prog\nhf\sportegyesulet\sportegyesulet_main.cpp
 	<iostream>
 	<cstring>
 	"csapat.h"
@@ -57,7 +57,7 @@
 	"memtrace.h"
 	"string5.h"
 
-1620580204 source:c:\kende\bme\prog\nhf\sportegyesulet\adatbazis.cpp
+1620593131 source:c:\kende\bme\prog\nhf\sportegyesulet\adatbazis.cpp
 	"adatbazis.h"
 	"memtrace.h"
 

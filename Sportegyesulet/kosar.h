@@ -48,6 +48,8 @@ public:
     /// Fájlba írás
     void fba(const char* fname);
 
+    Kosar* clone() {return new Kosar(*this);}
+
     ~Kosar();
 };
 
