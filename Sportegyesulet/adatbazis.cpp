@@ -8,9 +8,6 @@
 
 Adatbazis& Adatbazis::operator=(const Adatbazis& rhs) {
     if(this != &rhs) {
-        for(size_t i = 0; i < nCsapat; i++) {
-            delete *(Csapatok+i);
-        }
         delete[] Csapatok;
         Meret = rhs.Meret;
         nCsapat = 0;
@@ -23,51 +20,28 @@ Adatbazis& Adatbazis::operator=(const Adatbazis& rhs) {
     return *this;
 }
 
-bool Adatbazis::keres(std::string str) {
-    for(size_t i = 0; i < nCsapat; i++) {
-        if(str == Csapatok[i]->getNev()) return true;
-    }
-    return false;
-}
 
 void Adatbazis::felvesz(Csapat* cs) {
-    if(keres(cs->getNev())) {
-        std::cout << "Mar letezik ilyen nevu csapat" << std::endl;
-        delete cs;
-        return;
-    }
     if(nCsapat < Meret) {
         Csapatok[nCsapat++] = cs;
     } else {
-        Adatbazis temp(Meret+3);
+        Csapat** temp = new Csapat*[Meret+3];
         for(size_t i = 0; i < nCsapat; i++) {
-            temp.Csapatok[i] = Csapatok[i];
-            temp.nCsapat++;
+            temp[i] = Csapatok[i];
         }
-        temp.Csapatok[nCsapat] = cs;
-        Meret = temp.Meret;
 
-        for(size_t i = 0; i < temp.nCsapat; i++) {
-            Csapatok[i] = temp.Csapatok[i];
-        }
-        nCsapat++;
+        temp[nCsapat++] = cs;
+        Meret += 3;
+
+        delete[] Csapatok;
+
+        Csapatok = temp;
     }
 }
 
 
 
 void Adatbazis::torol(std::string str) {
-    std::string temp;
-    for(size_t i = 0; i < nCsapat; i++) {
-        temp = Csapatok[i]->getNev();
-        if(temp == str) {
-            delete *(Csapatok+i);
-            for(size_t n = i; n < nCsapat; n++){
-                Csapatok[n] = Csapatok[n+1];
-            }
-        }
-    }
-    nCsapat--;
 }
 
 int Adatbazis::letszam() {
@@ -79,8 +53,8 @@ int Adatbazis::letszam() {
 }
 
 void Adatbazis::listaz() {
-    std::cout << "\nCsapatok szama: " << amount() << std::endl;
-    if(amount() == 0) return;
+    std::cout << "\nCsapatok szama: " << nCsapat << std::endl;
+    if(nCsapat == 0) return;
     std::cout << "Csapatok listazasa:" << std::endl;
     for(size_t i = 0; i < nCsapat; i++) {
         Csapatok[i]->kiir();
@@ -96,21 +70,24 @@ void Adatbazis::fbol(const char* fname) {
     file.open(fname, std::ios::in);
     if(file.is_open()) {
          while(!file.eof()){
-            file >> i >> nev >> tag >> e1 >> e2 >> tam >> ppl;
+            file >> i >> nev >> tag;
             std::replace(nev.begin(), nev.end(), ';', ' ');
-            std::replace(e1.begin(), e1.end(), ';', ' ');
-            std::replace(e2.begin(), e2.end(), ';', ' ');
             switch(i){
                 case 0:         ///Csapat
                     felvesz(new Csapat(nev, tag));
                     break;
                 case 1:         ///Foci
+                    file >> e1 >> e2;
+                    std::replace(e1.begin(), e1.end(), ';', ' ');
+                    std::replace(e2.begin(), e2.end(), ';', ' ');
                     felvesz(new Foci(nev, e1, e2, tag));
                     break;
                 case 2:         ///Kezi
+                    file >> tam;
                     felvesz(new Kezi(nev, tag, tam));
                     break;
                 case 3:         ///Kosar
+                    file >> ppl;
                     felvesz(new Kosar(nev, tag, ppl));
                     break;
                 default:
