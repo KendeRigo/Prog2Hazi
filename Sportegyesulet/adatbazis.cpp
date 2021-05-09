@@ -1,6 +1,6 @@
 /**
  *  \file adatbazis.cpp
- *  Adatbazis osztály tagfüggvényeinek megvalósítása
+ *  Adatbazis osztÃ¡ly tagfÃ¼ggvÃ©nyeinek megvalÃ³sÃ­tÃ¡sa
  */
 
 #include "adatbazis.h"
@@ -14,6 +14,7 @@ Adatbazis& Adatbazis::operator=(const Adatbazis& rhs) {
         delete[] Csapatok;
         Meret = rhs.Meret;
         nCsapat = 0;
+        Csapatok = new Csapat*[Meret];
         for(size_t i = 0; i < rhs.nCsapat; i++) {
             Csapatok[i] = rhs.Csapatok[i];
             nCsapat++;
@@ -38,13 +39,18 @@ void Adatbazis::felvesz(Csapat* cs) {
     if(nCsapat < Meret) {
         Csapatok[nCsapat++] = cs;
     } else {
-        Meret += 3;
-        Adatbazis temp(Meret);
+        Adatbazis temp(Meret+3);
         for(size_t i = 0; i < nCsapat; i++) {
             temp.Csapatok[i] = Csapatok[i];
             temp.nCsapat++;
         }
-        *this = temp;
+        temp.Csapatok[nCsapat] = cs;
+        Meret = temp.Meret;
+
+        for(size_t i = 0; i < temp.nCsapat; i++) {
+            Csapatok[i] = temp.Csapatok[i];
+        }
+        nCsapat++;
     }
 }
 
@@ -56,16 +62,15 @@ void Adatbazis::torol(std::string str) {
         temp = Csapatok[i]->getNev();
         if(temp == str) {
             delete *(Csapatok+i);
-            nCsapat--;
             for(size_t n = i; n < nCsapat; n++){
-                Csapatok[i] = Csapatok[i+1];
-                delete *(Csapatok+i+1);
+                Csapatok[n] = Csapatok[n+1];
             }
         }
     }
+    nCsapat--;
 }
 
-int Adatbazis::letszam(Adatbazis& db) {
+int Adatbazis::letszam() {
     int ret = 0;
     for(size_t i = 0; i < nCsapat; i++) {
         ret += Csapatok[i]->getTagok();
