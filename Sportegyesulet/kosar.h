@@ -32,7 +32,6 @@ public:
     /// @return - referencia saját magára, hogy fűzhető legyen
     Kosar& operator=(const Kosar& rhs);
 
-    std::string getType() const {return "Kosar";}
 
     /// Pom-pom lányok számának lekérdezése
     /// @return - pom-pom lányok száma

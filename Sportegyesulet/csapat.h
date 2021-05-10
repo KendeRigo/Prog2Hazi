@@ -40,6 +40,11 @@ public:
     /// @return - csapatnév
     std::string getNev() const {return Csapatnev;}
 
+    virtual std::string getEdzo1() const {throw "Nincs ilyen adattagom";}
+    virtual std::string getEdzo2() const {throw "Nincs ilyen adattagom";}
+    virtual int getTamogatas() const {throw "Nincs ilyen adattagom";}
+    virtual int getPomPom() const {throw "Nincs ilyen adattagom";}
+
     /// Sportolók számának beállítása
     /// @param t - sportolók száma
     void setTagok(int t);

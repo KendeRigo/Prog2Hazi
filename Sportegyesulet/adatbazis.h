@@ -21,7 +21,7 @@ class Adatbazis {
 public:
     /// Konstruktor
     /// @param n - adatbázis mérete
-    Adatbazis(size_t meret = 1): Meret(meret), nCsapat(0){
+    Adatbazis(size_t meret = 0): Meret(meret), nCsapat(0){
         Csapatok = new Csapat*[Meret];
     }
 
@@ -39,7 +39,7 @@ public:
     /// @return - referencia saját magára, hogy fűzhető legyen
     Adatbazis& operator=(const Adatbazis& rhs);
 
-
+    bool keres(std::string str);
 
     /// Csapat felvétele
     /// @param cs - fevenni kívánt csapat
@@ -48,17 +48,23 @@ public:
 
     /// Csapatok törlése az adatbázisból
     /// @param cs - törlendő csapat
-    void torol(Csapat* cs);
+    void torol(std::string str);
 
     /// Index operator
     /// @param idx - az index értéke
     /// @return Csapat& - az indexelt csapat
-    Csapat& operator[](size_t idx) {return (*Csapatok)[idx];}
+    Csapat* operator[](size_t idx) {
+        if(idx >= nCsapat || idx < 0) {throw "Index hiba!";}
+        return Csapatok[idx];
+    }
 
     /// Konstans index operator
     /// @param idx - az index értéke
     /// @return Csapat& - az indexelt csapat
-    const Csapat& operator[](size_t idx) const {return (*Csapatok)[idx];}
+    const Csapat* operator[](size_t idx) const {
+        if(idx >= nCsapat || idx < 0) {throw "Index hiba!";}
+        return Csapatok[idx];
+    }
 
     /// Adatbázis méreténel lekérdezése
     /// @return size_t - adatbázis teljes mérete

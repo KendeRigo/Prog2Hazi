@@ -31,7 +31,6 @@ public:
     /// @return - referencia saját magára, hogy fűzhető legyen
     Kezi& operator=(const Kezi& rhs);
 
-    std::string getType() const {return "Kezi";}
 
     /// Csapat támogatásának lekérdezése
     /// @return - támogatás

@@ -1,5 +1,4 @@
 2 FTC 15 34000
-1 FTC 15 ad;sad;asd fe;re
 2 Kisps 356 2623310
 1 Fooi 23 Nagy;Jeno Kis;Adam
 -1

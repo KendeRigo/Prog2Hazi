@@ -8,6 +8,7 @@
 
 Adatbazis& Adatbazis::operator=(const Adatbazis& rhs) {
     if(this != &rhs) {
+
         delete[] Csapatok;
         Meret = rhs.Meret;
         nCsapat = rhs.nCsapat;
@@ -19,18 +20,30 @@ Adatbazis& Adatbazis::operator=(const Adatbazis& rhs) {
     return *this;
 }
 
+bool Adatbazis::keres(std::string str) {
+    for(size_t i = 0; i < nCsapat; i++) {
+        if(str == Csapatok[i]->getNev()) {return true;}
+    }
+     return false;
+}
+
 
 void Adatbazis::felvesz(Csapat* cs) {
+    if(keres(cs->getNev())) {
+        std::cout << "\nMar van ilyen nevu csapat!" << std::endl;
+        delete cs;
+        return;
+    }
     if(nCsapat < Meret) {
         Csapatok[nCsapat++] = cs;
     } else {
-        Csapat** temp = new Csapat*[Meret+3];
+        Csapat** temp = new Csapat*[Meret+1];
         for(size_t i = 0; i < nCsapat; i++) {
             temp[i] = Csapatok[i];
         }
 
         temp[nCsapat++] = cs;
-        Meret += 3;
+        Meret += 1;
 
         delete[] Csapatok;
 
@@ -40,9 +53,21 @@ void Adatbazis::felvesz(Csapat* cs) {
 
 
 
-void Adatbazis::torol(Csapat* cs) {
-    for(size_t i = 0; i < nCsapat; i++) {
-        if(Csapatok[i] == cs) {delete *(Csapatok+i);}
+void Adatbazis::torol(std::string str) {
+    if(keres(str)){
+    size_t hol;
+    for(size_t i = 0; i < nCsapat; i++){
+        if(str == Csapatok[i]->getNev()){
+            delete Csapatok[i];
+            hol = i;
+            break;
+        }
+    }
+    for(hol; hol < nCsapat-1; hol++){
+        Csapatok[hol] = Csapatok[hol+1]->clone();
+        delete Csapatok[hol+1];
+    }
+    nCsapat -= 1;
     }
 }
 
