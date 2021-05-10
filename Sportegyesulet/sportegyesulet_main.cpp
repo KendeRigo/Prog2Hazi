@@ -20,6 +20,7 @@ void runtest();
 void teszt() {
 
     Adatbazis tmp;
+    size_t meret = 11;
     tmp.fbol("Teszt.txt");
     TEST(Adatbazis, Fajlbol) {
         EXPECT_EQ("Teszt0", tmp[0]->getNev());
@@ -54,8 +55,8 @@ void teszt() {
         EXPECT_FALSE(tmp.keres("Teszt11"));
     }END
     TEST(Adatbazis, Meretek) {
-        EXPECT_EQ(11, tmp.size());
-        EXPECT_EQ(11, tmp.amount());
+        EXPECT_EQ(meret, tmp.size());
+        EXPECT_EQ(meret, tmp.amount());
         EXPECT_EQ(10+9+8+7+6+5+4+3+2+1, tmp.letszam());
     }END
         Adatbazis db;
@@ -71,7 +72,8 @@ void teszt() {
     TEST(Adatbazis, Torol) {
         db.torol("Teszt1");
         EXPECT_FALSE(db.keres("Teszt1"));
-        EXPECT_GT(11, db.amount());
+        meret = 11;
+        EXPECT_GT(meret, db.amount());
     }END
 
     Csapat tmpcs0("Tempcs0", 0);
@@ -183,14 +185,16 @@ void teszt() {
         EXPECT_TRUE(db.keres(tmpf0.getNev()));
         EXPECT_TRUE(db.keres(tmpke0.getNev()));
         EXPECT_TRUE(db.keres(tmpko0.getNev()));
-        EXPECT_EQ(14, db.amount());
+        meret = 14;
+        EXPECT_EQ(meret, db.amount());
     }END
     TEST(Adatbazis, Torol2) {
         db.torol(tmpcs0.getNev());
         db.torol(tmpf0.getNev());
         db.torol(tmpke0.getNev());
         db.torol(tmpko0.getNev());
-        EXPECT_EQ(10, db.amount());
+        meret = 10;
+        EXPECT_EQ(meret, db.amount());
     }END
 
 
@@ -309,7 +313,7 @@ int main() {
     cout << "Mit szeretne csinalni?\n\t(1)Tesztek futtatasa\n\t(2)Program hasznalata\n\t(0)Kilepes" << endl;
     int mode = 0;
     Adatbazis temp;
-    temp.fbol("Teszt.txt");
+    temp.fbol("Data.txt");
     while (true) {
         cin >> mode;
         if (!cin || mode < 0 || mode > 2) {
@@ -321,7 +325,7 @@ int main() {
 
         switch(mode) {
         case 0:     ///Kilépés
-            temp.fba("Data2.txt");
+            temp.fba("Data.txt");
             return 0;
         case 1:     ///Tesztek futtatása
             teszt();
