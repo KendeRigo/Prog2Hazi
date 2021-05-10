@@ -18,10 +18,9 @@ using namespace std;
 void runtest();
 
 void teszt() {
+
     Adatbazis tmp;
     tmp.fbol("Teszt.txt");
-    //tmp.listaz();
-
     TEST(Adatbazis, Fajlbol) {
         EXPECT_EQ("Teszt0", tmp[0]->getNev());
         EXPECT_EQ(0, tmp[0]->getTagok());
@@ -42,7 +41,7 @@ void teszt() {
         EXPECT_THROW(tmp[10], const char*);
         EXPECT_THROW(tmp[-1], const char*);
     }END
-    TEST(Adatbazis, Felvesz) {
+    TEST(Adatbazis, Felvesz){
         {Csapat* tmpcs = new Csapat("Teszt10", 10);
         tmp.felvesz(tmpcs);}
         EXPECT_NO_THROW(tmp[10]);
@@ -50,7 +49,7 @@ void teszt() {
         EXPECT_EQ(10, tmp[10]->getTagok());
         EXPECT_THROW(tmp[10]->getPomPom(), const char*);
     }END
-    TEST(Adatbazis, Keres) {
+    TEST(Adatbazis, Keres){
         EXPECT_TRUE(tmp.keres("Teszt0"));
         EXPECT_FALSE(tmp.keres("Teszt11"));
     }END
@@ -59,9 +58,9 @@ void teszt() {
         EXPECT_EQ(11, tmp.amount());
         EXPECT_EQ(10+9+8+7+6+5+4+3+2+1, tmp.letszam());
     }END
-    TEST(Adatbazis, Ertekadas) {
         Adatbazis db;
         db = tmp;
+    TEST(Adatbazis, Ertekadas) {
         EXPECT_EQ(tmp.size(), db.size());
         EXPECT_EQ(tmp.amount(), db.amount());
         for(size_t i = 0; i < db.amount(); i++){
@@ -69,6 +68,131 @@ void teszt() {
             EXPECT_EQ(tmp[i]->getTagok(), db[i]->getTagok());
         }
     }END
+    TEST(Adatbazis, Torol) {
+        db.torol("Teszt1");
+        EXPECT_FALSE(db.keres("Teszt1"));
+        EXPECT_GT(11, db.amount());
+    }END
+
+    Csapat tmpcs0("Tempcs0", 0);
+    Csapat tmpcs1 = tmpcs0;
+    TEST(Csapat, Masolo konstruktor) {
+        EXPECT_EQ(tmpcs0.getNev(), tmpcs1.getNev());
+        EXPECT_EQ(tmpcs0.getTagok(), tmpcs1.getTagok());
+    }END
+    TEST(Csapat, Setterek) {
+        tmpcs0.setNev("Tempcs1");
+        tmpcs0.setTagok(1);
+        EXPECT_EQ("Tempcs1", tmpcs0.getNev());
+        EXPECT_EQ(1, tmpcs0.getTagok());
+    }END
+    TEST(Csapat, Ertekadas) {
+        EXPECT_NE(tmpcs0.getNev(), tmpcs1.getNev());
+        EXPECT_NE(tmpcs0.getTagok(), tmpcs1.getTagok());
+        tmpcs1 = tmpcs0;
+        EXPECT_EQ(tmpcs0.getNev(), tmpcs1.getNev());
+        EXPECT_EQ(tmpcs0.getTagok(), tmpcs1.getTagok());
+    }END
+
+    Foci tmpf0("Tempf0", "Tempf0 Edzo1", "Tempf0 Edzo2", 0);
+    Foci tmpf1 = tmpf0;
+    TEST(Foci, Masolo konstruktor) {
+        EXPECT_EQ(tmpf0.getNev(), tmpf1.getNev());
+        EXPECT_EQ(tmpf0.getTagok(), tmpf1.getTagok());
+        EXPECT_EQ(tmpf0.getEdzo1(), tmpf1.getEdzo1());
+        EXPECT_EQ(tmpf0.getEdzo2(), tmpf1.getEdzo2());
+    }END
+    TEST(Foci, Setterek) {
+        tmpf0.setNev("Tempf1");
+        tmpf0.setTagok(1);
+        tmpf0.setEdzo1("Tempf1 Edzo1");
+        tmpf0.setEdzo2("Tempf1 Edzo2");
+        EXPECT_EQ("Tempf1", tmpf0.getNev());
+        EXPECT_EQ(1, tmpf0.getTagok());
+        EXPECT_EQ("Tempf1 Edzo1", tmpf0.getEdzo1());
+        EXPECT_EQ("Tempf1 Edzo2", tmpf0.getEdzo2());
+    }END
+    TEST(Foci, Ertekadas) {
+        EXPECT_NE(tmpf0.getNev(), tmpf1.getNev());
+        EXPECT_NE(tmpf0.getTagok(), tmpf1.getTagok());
+        EXPECT_NE(tmpf0.getEdzo1(), tmpf1.getEdzo1());
+        EXPECT_NE(tmpf0.getEdzo2(), tmpf1.getEdzo2());
+        tmpf1 = tmpf0;
+        EXPECT_EQ(tmpf0.getNev(), tmpf1.getNev());
+        EXPECT_EQ(tmpf0.getTagok(), tmpf1.getTagok());
+        EXPECT_EQ(tmpf0.getEdzo1(), tmpf1.getEdzo1());
+        EXPECT_EQ(tmpf0.getEdzo2(), tmpf1.getEdzo2());
+    }END
+
+    Kezi tmpke0("Tempke0", 0, 0);
+    Kezi tmpke1 = tmpke0;
+    TEST(Kezi, Masolo konstruktor) {
+        EXPECT_EQ(tmpke0.getNev(), tmpke1.getNev());
+        EXPECT_EQ(tmpke0.getTagok(), tmpke1.getTagok());
+        EXPECT_EQ(tmpke0.getTamogatas(), tmpke1.getTamogatas());
+    }END
+    TEST(Kezi, Setterek) {
+        tmpke0.setNev("Tempke1");
+        tmpke0.setTagok(1);
+        tmpke0.setTamogatas(1);
+        EXPECT_EQ("Tempke1", tmpke0.getNev());
+        EXPECT_EQ(1, tmpke0.getTagok());
+        EXPECT_EQ(1, tmpke0.getTamogatas());
+    }END
+    TEST(Kezi, Ertekadas) {
+        EXPECT_NE(tmpke0.getNev(), tmpke1.getNev());
+        EXPECT_NE(tmpke0.getTagok(), tmpke1.getTagok());
+        EXPECT_NE(tmpke0.getTamogatas(), tmpke1.getTamogatas());
+        tmpke1 = tmpke0;
+        EXPECT_EQ(tmpke0.getNev(), tmpke1.getNev());
+        EXPECT_EQ(tmpke0.getTagok(), tmpke1.getTagok());
+        EXPECT_EQ(tmpke0.getTamogatas(), tmpke1.getTamogatas());
+    }END
+
+    Kosar tmpko0("Tempko0", 0, 0);
+    Kosar tmpko1 = tmpko0;
+    TEST(Kosar, Masolo konstruktor) {
+        EXPECT_EQ(tmpko0.getNev(), tmpko1.getNev());
+        EXPECT_EQ(tmpko0.getTagok(), tmpko1.getTagok());
+        EXPECT_EQ(tmpko0.getPomPom(), tmpko1.getPomPom());
+    }END
+    TEST(Kosar, Setterek) {
+        tmpko0.setNev("Tempko1");
+        tmpko0.setTagok(1);
+        tmpko0.setPomPom(1);
+        EXPECT_EQ("Tempko1", tmpko0.getNev());
+        EXPECT_EQ(1, tmpko0.getTagok());
+        EXPECT_EQ(1, tmpko0.getPomPom());
+    }END
+    TEST(Kosar, Ertekadas) {
+        EXPECT_NE(tmpko0.getNev(), tmpko1.getNev());
+        EXPECT_NE(tmpko0.getTagok(), tmpko1.getTagok());
+        EXPECT_NE(tmpko0.getPomPom(), tmpko1.getPomPom());
+        tmpko1 = tmpko0;
+        EXPECT_EQ(tmpko0.getNev(), tmpko1.getNev());
+        EXPECT_EQ(tmpko0.getTagok(), tmpko1.getTagok());
+        EXPECT_EQ(tmpko0.getPomPom(), tmpko1.getPomPom());
+    }END
+
+    TEST(Adatbazis, Felvesz2){
+        db.felvesz(tmpcs0.clone());
+        db.felvesz(tmpf0.clone());
+        db.felvesz(tmpke0.clone());
+        db.felvesz(tmpko0.clone());
+        EXPECT_TRUE(db.keres(tmpcs0.getNev()));
+        EXPECT_TRUE(db.keres(tmpf0.getNev()));
+        EXPECT_TRUE(db.keres(tmpke0.getNev()));
+        EXPECT_TRUE(db.keres(tmpko0.getNev()));
+        EXPECT_EQ(14, db.amount());
+    }END
+    TEST(Adatbazis, Torol2) {
+        db.torol(tmpcs0.getNev());
+        db.torol(tmpf0.getNev());
+        db.torol(tmpke0.getNev());
+        db.torol(tmpko0.getNev());
+        EXPECT_EQ(10, db.amount());
+    }END
+
 
     return;
 }
